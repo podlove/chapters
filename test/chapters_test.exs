@@ -28,4 +28,18 @@ defmodule ChaptersTest do
              %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
            ]
   end
+
+  @json_chapters ~S"""
+  [
+  	{ "start": "00:00:00", "title": "Intro"},
+  	{ "start": "00:01:59", "title": "Podlove", "href": "http://podlove.org/"}
+  ]
+  """
+
+  test "decode json" do
+    assert Chapters.decode(:json, @json_chapters) == [
+             %Chapter{time: 0, title: "Intro"},
+             %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
+           ]
+  end
 end

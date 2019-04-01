@@ -1,6 +1,7 @@
 defmodule Chapters do
   alias Chapters.Chapter
   alias Chapters.Mp4chaps
+  alias Chapters.Time.Normalplaytime, as: NPT
 
   def decode(:psc, xml) when is_binary(xml) do
     import SweetXml
@@ -36,15 +37,30 @@ defmodule Chapters do
     |> Enum.map(fn chapter ->
       %Chapter{
         title: Keyword.get(chapter, :title),
-        time: Keyword.get(chapter, :time) |> Chapters.Time.Normalplaytime.total_ms(),
+        time: Keyword.get(chapter, :time) |> NPT.total_ms(),
         url: Keyword.get(chapter, :url)
       }
     end)
   end
 
-  defp parse_time(time) when is_binary(time) do
-    {:ok, result, _, _, _, _} = Chapters.Time.Normalplaytime.parse(time)
+  def decode(:json, input) when is_binary(input) do
+    {:ok, chapters} = Jason.decode(input)
 
-    {:ok, Chapters.Time.Normalplaytime.total_ms(result)}
+    chapters
+    |> Enum.map(fn chapter ->
+      {:ok, time} = Map.get(chapter, "start") |> parse_time
+
+      %Chapter{
+        title: Map.get(chapter, "title"),
+        time: time,
+        url: Map.get(chapter, "href")
+      }
+    end)
+  end
+
+  defp parse_time(time) when is_binary(time) do
+    {:ok, result, _, _, _, _} = NPT.parse(time)
+
+    {:ok, NPT.total_ms(result)}
   end
 end
