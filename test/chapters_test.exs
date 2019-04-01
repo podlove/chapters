@@ -12,7 +12,7 @@ defmodule ChaptersTest do
   """
 
   test "decode PSC" do
-    assert Chapters.decode(:psc, @psc_chapters) == [
+    assert Chapters.decode(@psc_chapters, :psc) == [
              %Chapter{time: 0, title: "Intro"},
              %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
            ]
@@ -23,7 +23,7 @@ defmodule ChaptersTest do
   00:01:59 Podlove <http://podlove.org/>
   """
   test "decode mp4chaps" do
-    assert Chapters.decode(:mp4chaps, @mp4chaps_chapters) == [
+    assert Chapters.decode(@mp4chaps_chapters, :mp4chaps) == [
              %Chapter{time: 0, title: "Intro"},
              %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
            ]
@@ -37,7 +37,7 @@ defmodule ChaptersTest do
   """
 
   test "decode json" do
-    assert Chapters.decode(:json, @json_chapters) == [
+    assert Chapters.decode(@json_chapters, :json) == [
              %Chapter{time: 0, title: "Intro"},
              %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
            ]

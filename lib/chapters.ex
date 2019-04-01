@@ -1,23 +1,28 @@
 defmodule Chapters do
   alias Chapters.Parsers
 
+  @type chapter_format() :: :psc | :mp4chaps | :json
+
   @doc """
   Decode podcast chapter binary.
 
   Supported formats: :psc, :mp4chaps, :json
   """
-  @spec decode(atom(), binary()) :: [Chapters.Chapter.t()]
-  def decode(type, input)
+  @spec decode(binary(), chapter_format()) :: [Chapters.Chapter.t()]
+  def decode(input, type)
 
-  def decode(:psc, input) when is_binary(input) do
+  def decode(input, :psc) when is_binary(input) do
     Parsers.PSC.Parser.parse(input)
   end
 
-  def decode(:mp4chaps, input) when is_binary(input) do
+  def decode(input, :mp4chaps) when is_binary(input) do
     Parsers.Mp4chaps.Parser.parse(input)
   end
 
-  def decode(:json, input) when is_binary(input) do
+  def decode(input, :json) when is_binary(input) do
     Parsers.Json.Parser.parse(input)
   end
+
+  # @spec encode([Chapters.Chapter.t()], chapter_format()) :: binary()
+  # def encode(input, type)
 end
