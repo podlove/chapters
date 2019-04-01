@@ -1,5 +1,6 @@
 defmodule Chapters do
   alias Chapters.Chapter
+  alias Chapters.Mp4chaps
 
   def decode(:psc, xml) when is_binary(xml) do
     import SweetXml
@@ -25,6 +26,19 @@ defmodule Chapters do
         end
 
       %Chapter{title: title, time: ms, url: url}
+    end)
+  end
+
+  def decode(:mp4chaps, input) when is_binary(input) do
+    {:ok, chapters, _, _, _, _} = Mp4chaps.parse(input)
+
+    chapters
+    |> Enum.map(fn chapter ->
+      %Chapter{
+        title: Keyword.get(chapter, :title),
+        time: Keyword.get(chapter, :time) |> Chapters.Time.Normalplaytime.total_ms(),
+        url: Keyword.get(chapter, :url)
+      }
     end)
   end
 

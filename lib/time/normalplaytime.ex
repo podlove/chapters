@@ -65,42 +65,7 @@ defmodule Chapters.Time.Normalplaytime do
     end)
   end
 
-  hours =
-    integer(min: 1)
-    |> unwrap_and_tag(:hours)
-
-  minutes =
-    integer(min: 1, max: 2)
-    |> unwrap_and_tag(:minutes)
-
-  seconds =
-    integer(min: 1, max: 2)
-    |> unwrap_and_tag(:seconds)
-
-  milliseconds =
-    ascii_string([?0..?9], min: 1, max: 3)
-    |> map({Chapters.Time.Normalplaytime, :convert_ms, []})
-    |> unwrap_and_tag(:milliseconds)
-
-  component_ms =
-    ignore(string("."))
-    |> concat(milliseconds)
-
-  time_s =
-    seconds
-    |> optional(component_ms)
-
-  time_ms =
-    minutes
-    |> ignore(string(":"))
-    |> concat(time_s)
-
-  time_hms =
-    hours
-    |> ignore(string(":"))
-    |> concat(time_ms)
-
-  defparsec(:parse, choice([time_hms, time_ms, time_s]))
+  defparsec(:parse, Chapters.Parsers.Helpers.normalplaytime())
 
   def convert_ms(n) when is_binary(n) and byte_size(n) == 1 do
     String.to_integer(n) * 100
