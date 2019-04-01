@@ -1,4 +1,4 @@
 defmodule Mp4chapsTest do
   use ExUnit.Case
-  doctest Chapters.Mp4chaps, import: true
+  doctest Chapters.Parsers.Mp4chaps.Parser, import: true
 end

@@ -18,7 +18,7 @@ defmodule Chapters.Parsers.Helpers do
 
   def milliseconds do
     ascii_string([?0..?9], min: 1, max: 3)
-    |> map({Chapters.Time.Normalplaytime, :convert_ms, []})
+    |> map({Chapters.Parsers.Normalplaytime.Parser, :convert_ms, []})
     |> unwrap_and_tag(:milliseconds)
   end
 

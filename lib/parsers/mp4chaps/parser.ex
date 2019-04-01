@@ -1,16 +1,18 @@
-defmodule Chapters.Mp4chaps do
+defmodule Chapters.Parsers.Mp4chaps.Parser do
   import NimbleParsec
+  alias Chapters.Chapter
+  alias Chapters.Parsers.Normalplaytime.Parser, as: NPT
 
   @moduledoc ~S"""
   Mp4chaps parser.
 
   ## Examples
 
-    iex> {:ok, [r | _], "", _, _, _} = parse("00:00:00 Intro")
+    iex> {:ok, [r | _], "", _, _, _} = mp4chaps("00:00:00 Intro")
     iex> r
     [time: [hours: 0, minutes: 0, seconds: 0], title: "Intro"]
 
-    iex> {:ok, r, "", _, _, _} = parse("00:00:00 Intro\r\n00:01:02 Podlove <https://podlove.org>")
+    iex> {:ok, r, "", _, _, _} = mp4chaps("00:00:00 Intro\r\n00:01:02 Podlove <https://podlove.org>")
     iex> r
     [
       [time: [hours: 0, minutes: 0, seconds: 0], title: "Intro"],
@@ -51,7 +53,20 @@ defmodule Chapters.Mp4chaps do
     |> ignore(end_of_line)
 
   defparsec(
-    :parse,
+    :mp4chaps,
     repeat(line |> wrap())
   )
+
+  def parse(input) do
+    {:ok, chapters, _, _, _, _} = mp4chaps(input)
+
+    chapters
+    |> Enum.map(fn chapter ->
+      %Chapter{
+        title: Keyword.get(chapter, :title),
+        time: Keyword.get(chapter, :time) |> NPT.total_ms(),
+        url: Keyword.get(chapter, :url)
+      }
+    end)
+  end
 end

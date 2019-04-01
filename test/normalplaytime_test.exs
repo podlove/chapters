@@ -1,4 +1,4 @@
 defmodule NormalplaytimeTest do
   use ExUnit.Case
-  doctest Chapters.Time.Normalplaytime, import: true
+  doctest Chapters.Parsers.Normalplaytime.Parser, import: true
 end

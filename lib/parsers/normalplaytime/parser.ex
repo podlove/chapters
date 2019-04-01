@@ -1,4 +1,4 @@
-defmodule Chapters.Time.Normalplaytime do
+defmodule Chapters.Parsers.Normalplaytime.Parser do
   import NimbleParsec
 
   @moduledoc ~S"""
