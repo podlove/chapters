@@ -1,6 +1,5 @@
 defmodule ChaptersTest do
   use ExUnit.Case
-  doctest Chapters
 
   alias Chapters.Chapter
 
