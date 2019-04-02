@@ -23,6 +23,27 @@ defmodule Chapters do
     Parsers.Json.Parser.parse(input)
   end
 
-  # @spec encode([Chapters.Chapter.t()], chapter_format()) :: binary()
-  # def encode(input, type)
+  @doc """
+  Encode podcast chapter object into binary.
+
+  Supported formats: :psc, :mp4chaps, :json
+  """
+  @spec encode([Chapters.Chapter.t()], chapter_format()) :: binary()
+  def encode(input, type)
+
+  def encode(input, :json) do
+    input
+    |> Enum.map(fn chapter ->
+      %{
+        start: Map.get(chapter, :time) |> Chapters.Formatters.Normalplaytime.Formatter.format(),
+        title: Map.get(chapter, :title)
+      }
+      |> maybe_put(:href, Map.get(chapter, :url))
+      |> maybe_put(:image, Map.get(chapter, :image))
+    end)
+    |> Jason.encode!()
+  end
+
+  defp maybe_put(map, _key, nil), do: map
+  defp maybe_put(map, key, value), do: Map.put(map, key, value)
 end

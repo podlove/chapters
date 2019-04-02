@@ -31,8 +31,8 @@ defmodule ChaptersTest do
 
   @json_chapters ~S"""
   [
-  	{ "start": "00:00:00", "title": "Intro"},
-  	{ "start": "00:01:59", "title": "Podlove", "href": "http://podlove.org/"}
+  	{ "start": "00:00:00.000", "title": "Intro"},
+  	{ "start": "00:01:59.000", "title": "Podlove", "href": "http://podlove.org/"}
   ]
   """
 
@@ -41,5 +41,16 @@ defmodule ChaptersTest do
              %Chapter{time: 0, title: "Intro"},
              %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
            ]
+  end
+
+  test "encode json" do
+    assert Chapters.encode(
+             [
+               %Chapter{time: 0, title: "Intro"},
+               %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
+             ],
+             :json
+           )
+           |> Jason.decode!() == Jason.decode!(@json_chapters)
   end
 end
