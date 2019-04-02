@@ -8,6 +8,8 @@ defmodule Chapters.MixProject do
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      description: description(),
+      package: package(),
 
       # Docs
       name: "Chapters",
@@ -17,6 +19,17 @@ defmodule Chapters.MixProject do
         main: "Chapters",
         extras: ["README.md"]
       ]
+    ]
+  end
+
+  defp description() do
+    "Podcast chapter parser and formatter. Supports xml/psc, mp4chaps and json."
+  end
+
+  defp package() do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/podlove/chapters"}
     ]
   end
 
