@@ -45,7 +45,6 @@ defmodule Chapters.MixProject do
     [
       {:sweet_xml, "~> 0.6.6"},
       {:xml_builder, "~> 2.1"},
-      {:timex, "~> 3.5"},
       {:nimble_parsec, "~> 0.5.0"},
       {:jason, "~> 1.1"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false}
