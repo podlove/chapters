@@ -38,4 +38,8 @@ defmodule Chapters do
   def encode(input, :psc) do
     Chapters.Formatters.PSC.Formatter.format(input)
   end
+
+  def encode(input, :mp4chaps) do
+    Chapters.Formatters.Mp4chaps.Formatter.format(input)
+  end
 end

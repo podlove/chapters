@@ -72,4 +72,20 @@ defmodule ChaptersTest do
            )
            |> String.trim() == String.trim(@psc_chapters)
   end
+
+  @mp4chaps_chapters ~S"""
+  00:00:00.000 Intro
+  00:01:59.000 Podlove <http://podlove.org/>
+  """
+  test "encode mp4chaps" do
+    assert Chapters.encode(
+             [
+               %Chapter{time: 0, title: "Intro"},
+               %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
+             ],
+             :mp4chaps
+           )
+           |> String.trim() ==
+             String.trim(@mp4chaps_chapters)
+  end
 end
