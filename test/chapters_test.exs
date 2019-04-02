@@ -53,4 +53,23 @@ defmodule ChaptersTest do
            )
            |> Jason.decode!() == Jason.decode!(@json_chapters)
   end
+
+  @psc_chapters ~S"""
+  <?xml version="1.0" encoding="UTF-8"?>
+  <psc:chapters version="1.2" xmlns:psc="http://podlove.org/simple-chapters">
+    <psc:chapter start="00:00:00.000" title="Intro"/>
+    <psc:chapter href="http://podlove.org/" start="00:01:59.000" title="Podlove"/>
+  </psc:chapters>
+  """
+
+  test "encode psc" do
+    assert Chapters.encode(
+             [
+               %Chapter{time: 0, title: "Intro"},
+               %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
+             ],
+             :psc
+           )
+           |> String.trim() == String.trim(@psc_chapters)
+  end
 end

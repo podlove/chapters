@@ -22,6 +22,7 @@ defmodule Chapters.MixProject do
   defp deps do
     [
       {:sweet_xml, "~> 0.6.6"},
+      {:xml_builder, "~> 2.1"},
       {:timex, "~> 3.5"},
       {:nimble_parsec, "~> 0.5.0"},
       {:jason, "~> 1.1"}

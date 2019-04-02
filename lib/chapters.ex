@@ -34,4 +34,8 @@ defmodule Chapters do
   def encode(input, :json) do
     Chapters.Formatters.Json.Formatter.format(input)
   end
+
+  def encode(input, :psc) do
+    Chapters.Formatters.PSC.Formatter.format(input)
+  end
 end
