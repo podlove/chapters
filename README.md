@@ -2,6 +2,8 @@
 
 Podcast chapter parser and formatter.
 
+[![Build Status](https://travis-ci.org/podlove/chapters.svg?branch=master)](https://travis-ci.org/podlove/chapters)
+
 Supports:
 
 - [Podlove Simple Chapters](https://podlove.org/simple-chapters/) (xml/psc)
