@@ -1,4 +1,9 @@
 defmodule Chapters do
+  @moduledoc "README.md"
+             |> File.read!()
+             |> String.split("<!-- MDOC !-->")
+             |> Enum.fetch!(1)
+
   alias Chapters.Parsers
 
   @type chapter_format() :: :psc | :mp4chaps | :json

@@ -1,10 +1,13 @@
 defmodule Chapters.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+  @url "https://github.com/podlove/chapters"
+
   def project do
     [
       app: :chapters,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -13,7 +16,7 @@ defmodule Chapters.MixProject do
 
       # Docs
       name: "Chapters",
-      source_url: "https://github.com/podlove/chapters",
+      source_url: @url,
       docs: [
         # The main page in the docs
         main: "Chapters",
@@ -29,7 +32,8 @@ defmodule Chapters.MixProject do
   defp package() do
     [
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/podlove/chapters"}
+      maintainers: ["Eric Teubert"],
+      links: %{"GitHub" => @url}
     ]
   end
 

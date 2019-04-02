@@ -1,26 +1,18 @@
 # Chapters
 
-Podcast chapter parser and formatter.
-
 [![Build Status](https://travis-ci.org/podlove/chapters.svg?branch=master)](https://travis-ci.org/podlove/chapters)
+
+[Online Documentation](https://hexdocs.pm/chapters).
+
+<!-- MDOC !-->
+
+Podcast chapter parser and formatter.
 
 Supports:
 
 - [Podlove Simple Chapters](https://podlove.org/simple-chapters/) (xml/psc)
 - mp4chaps
 - JSON
-
-## Installation
-
-The package can be installed by adding `chapters` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:chapters, "~> 0.1"}
-  ]
-end
-```
 
 ## Basic Usage
 
@@ -66,6 +58,20 @@ Encode to JSON
 ```elixir
 iex> Chapters.encode(chapters, :json) |> IO.puts                
 [{"start":"00:00:00.000","title":"Intro"},{"href":"http://podlove.org/","start":"00:01:59.000","title":"Podlove"}]
+```
+
+<!-- MDOC !-->
+
+## Installation
+
+The package can be installed by adding `chapters` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:chapters, "~> 0.1"}
+  ]
+end
 ```
 
 ## License
