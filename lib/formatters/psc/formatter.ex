@@ -1,6 +1,7 @@
 defmodule Chapters.Formatters.PSC.Formatter do
-  import XmlBuilder
+  @moduledoc false
 
+  import XmlBuilder
   alias Chapters.Chapter
 
   @spec format([Chapter.t()]) :: binary()

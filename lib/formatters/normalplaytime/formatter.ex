@@ -4,8 +4,8 @@ defmodule Chapters.Formatters.Normalplaytime.Formatter do
 
   ## Examples
 
-    iex> format(2_511_792)
-    "00:41:51.792"
+      iex> format(2_511_792)
+      "00:41:51.792"
 
   """
 

@@ -1,4 +1,6 @@
 defmodule Chapters.Formatters.Mp4chaps.Formatter do
+  @moduledoc false
+
   alias Chapters.Chapter
 
   @spec format([Chapter.t()]) :: binary()

@@ -1,4 +1,6 @@
 defmodule Chapters.Parsers.Json.Parser do
+  @moduledoc false
+
   alias Chapters.Chapter
   alias Chapters.Parsers.Normalplaytime.Parser, as: NPT
 

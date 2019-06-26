@@ -1,4 +1,6 @@
 defmodule Chapters.Formatters.Json.Formatter do
+  @moduledoc false
+
   import Jason.Helpers
   alias Chapters.Chapter
 

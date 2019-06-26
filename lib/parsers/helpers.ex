@@ -1,4 +1,6 @@
 defmodule Chapters.Parsers.Helpers do
+  @moduledoc false
+
   import NimbleParsec
 
   def hours do

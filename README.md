@@ -70,7 +70,7 @@ The package can be installed by adding `chapters` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:chapters, "~> 0.1"}
+    {:chapters, "~> 1.0"}
   ]
 end
 ```

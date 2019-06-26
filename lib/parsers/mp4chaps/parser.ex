@@ -8,16 +8,18 @@ defmodule Chapters.Parsers.Mp4chaps.Parser do
 
   ## Examples
 
-    iex> {:ok, [r | _], "", _, _, _} = mp4chaps("00:00:00 Intro")
-    iex> r
-    [start: [hours: 0, minutes: 0, seconds: 0], title: "Intro"]
+      iex> {:ok, [r | _], "", _, _, _} = mp4chaps("00:00:00 Intro")
+      iex> r
+      [start: [hours: 0, minutes: 0, seconds: 0], title: "Intro"]
 
-    iex> {:ok, r, "", _, _, _} = mp4chaps("00:00:00 Intro\r\n00:01:02 Podlove <https://podlove.org>")
-    iex> r
-    [
-      [start: [hours: 0, minutes: 0, seconds: 0], title: "Intro"],
-      [start: [hours: 0, minutes: 1, seconds: 2], title: "Podlove", href: "https://podlove.org"]
-    ]
+
+
+      iex> {:ok, r, "", _, _, _} = mp4chaps("00:00:00 Intro\r\n00:01:02 Podlove <https://podlove.org>")
+      iex> r
+      [
+        [start: [hours: 0, minutes: 0, seconds: 0], title: "Intro"],
+        [start: [hours: 0, minutes: 1, seconds: 2], title: "Podlove", href: "https://podlove.org"]
+      ]
   """
 
   alias Chapters.Parsers.Helpers

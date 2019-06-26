@@ -22,7 +22,7 @@ defmodule Chapters.Chapter do
             image: nil
 
   @doc """
-      Produces an ordered keylist `:start, :title, :href, :image` with the start already formatted top a normal playtime for use in output formats
+  Produces an ordered keylist `:start, :title, :href, :image` with the start already formatted top a normal playtime for use in output formats
   """
 
   def to_keylist(%__MODULE__{} = chapter) do

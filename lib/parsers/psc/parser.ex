@@ -1,4 +1,6 @@
 defmodule Chapters.Parsers.PSC.Parser do
+  @moduledoc false
+
   import SweetXml
   alias Chapters.Chapter
   alias Chapters.Parsers.Normalplaytime.Parser, as: NPT
