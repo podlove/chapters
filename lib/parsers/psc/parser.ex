@@ -1,4 +1,6 @@
 defmodule Chapters.Parsers.PSC.Parser do
+  @moduledoc false
+
   import SweetXml
   alias Chapters.Chapter
   alias Chapters.Parsers.Normalplaytime.Parser, as: NPT
@@ -8,28 +10,34 @@ defmodule Chapters.Parsers.PSC.Parser do
     |> xmap(
       chapters: [
         ~x"//psc:chapter"l,
+        start: ~x"./@start"s,
         title: ~x"./@title"s,
-        time: ~x"./@start"s,
-        url: ~x"./@href"s
+        href: ~x"./@href"s,
+        image: ~x"./@image"s
       ]
     )
     |> Map.get(:chapters)
-    |> Enum.map(fn %{title: title, time: time, url: url} ->
-      {:ok, ms} = parse_time(time)
+    |> Enum.map(fn parse_map ->
+      Enum.reduce(parse_map, %Chapter{}, fn
+        {:start, timestring}, chapter ->
+          %Chapter{chapter | start: parse_time(timestring)}
 
-      url =
-        if url == "" do
-          nil
-        else
-          url
-        end
+        {:title, title}, chapter when is_binary(title) ->
+          %Chapter{chapter | title: title}
 
-      %Chapter{title: title, time: ms, url: url}
+        {:href, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
+          %Chapter{chapter | href: value}
+
+        {:image, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
+          %Chapter{chapter | image: value}
+
+        _, chapter ->
+          chapter
+      end)
     end)
   end
 
   defp parse_time(time) when is_binary(time) do
-    {:ok, result, _, _, _, _} = NPT.parse(time)
-    {:ok, NPT.total_ms(result)}
+    NPT.parse_total_ms(time)
   end
 end

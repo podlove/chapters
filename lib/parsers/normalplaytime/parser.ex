@@ -8,41 +8,41 @@ defmodule Chapters.Parsers.Normalplaytime.Parser do
 
   ## Examples
 
-    iex> {:ok, r, "", _, _, _} = parse("1")
-    iex> r
-    [{:seconds, 1}]
+      iex> {:ok, r, "", _, _, _} = parse("1")
+      iex> r
+      [{:seconds, 1}]
 
-    iex> {:ok, r, "", _, _, _} = parse("1.843")
-    iex> r
-    [{:seconds, 1}, {:milliseconds, 843}]
+      iex> {:ok, r, "", _, _, _} = parse("1.843")
+      iex> r
+      [{:seconds, 1}, {:milliseconds, 843}]
 
-    iex> {:ok, r, "", _, _, _} = parse("12:34")
-    iex> r
-    [{:minutes, 12}, {:seconds, 34}]
+      iex> {:ok, r, "", _, _, _} = parse("12:34")
+      iex> r
+      [{:minutes, 12}, {:seconds, 34}]
 
-    iex> {:ok, r, "", _, _, _} = parse("12:34.56")
-    iex> r
-    [{:minutes, 12}, {:seconds, 34}, {:milliseconds, 560}]
+      iex> {:ok, r, "", _, _, _} = parse("12:34.56")
+      iex> r
+      [{:minutes, 12}, {:seconds, 34}, {:milliseconds, 560}]
 
-    iex> {:ok, r, "", _, _, _} = parse("12:34.5")
-    iex> r
-    [{:minutes, 12}, {:seconds, 34}, {:milliseconds, 500}]
+      iex> {:ok, r, "", _, _, _} = parse("12:34.5")
+      iex> r
+      [{:minutes, 12}, {:seconds, 34}, {:milliseconds, 500}]
 
-    iex> {:ok, r, "", _, _, _} = parse("1:2")
-    iex> r
-    [{:minutes, 1}, {:seconds, 2}]
+      iex> {:ok, r, "", _, _, _} = parse("1:2")
+      iex> r
+      [{:minutes, 1}, {:seconds, 2}]
 
-    iex> {:ok, r, "", _, _, _} = parse("1:2:3.4")
-    iex> r
-    [{:hours, 1}, {:minutes, 2}, {:seconds, 3}, {:milliseconds, 400}]
+      iex> {:ok, r, "", _, _, _} = parse("1:2:3.4")
+      iex> r
+      [{:hours, 1}, {:minutes, 2}, {:seconds, 3}, {:milliseconds, 400}]
 
-    iex> {:ok, r, "", _, _, _} = parse("01:02:03")
-    iex> r
-    [{:hours, 1}, {:minutes, 2}, {:seconds, 3}]
+      iex> {:ok, r, "", _, _, _} = parse("01:02:03")
+      iex> r
+      [{:hours, 1}, {:minutes, 2}, {:seconds, 3}]
 
-    iex> {:ok, r, "", _, _, _} = parse("00:00:00.123")
-    iex> r
-    [{:hours, 0}, {:minutes, 0}, {:seconds, 0}, {:milliseconds, 123}]
+      iex> {:ok, r, "", _, _, _} = parse("00:00:00.123")
+      iex> r
+      [{:hours, 0}, {:minutes, 0}, {:seconds, 0}, {:milliseconds, 123}]
 
   """
 
@@ -66,6 +66,28 @@ defmodule Chapters.Parsers.Normalplaytime.Parser do
   end
 
   defparsec(:parse, Chapters.Parsers.Helpers.normalplaytime())
+
+  @doc """
+  Get total milliseconds from a Normal Play Time string.
+
+  See https://www.w3.org/TR/media-frags/#npttimedef.
+
+  ## Examples
+
+    iex> parse_total_ms("00:01:30.00")
+    90000
+
+    iex> parse_total_ms("something")
+    nil
+
+  """
+  def parse_total_ms(playtime) when is_binary(playtime) do
+    with {:ok, parse_result, "", _, _, _} <- parse(playtime) do
+      total_ms(parse_result)
+    else
+      _ -> nil
+    end
+  end
 
   def convert_ms(n) when is_binary(n) and byte_size(n) == 1 do
     String.to_integer(n) * 100

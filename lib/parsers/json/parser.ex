@@ -1,4 +1,6 @@
 defmodule Chapters.Parsers.Json.Parser do
+  @moduledoc false
+
   alias Chapters.Chapter
   alias Chapters.Parsers.Normalplaytime.Parser, as: NPT
 
@@ -7,18 +9,16 @@ defmodule Chapters.Parsers.Json.Parser do
 
     chapters
     |> Enum.map(fn chapter ->
-      {:ok, time} = Map.get(chapter, "start") |> parse_time
-
       %Chapter{
-        title: Map.get(chapter, "title"),
-        time: time,
-        url: Map.get(chapter, "href")
+        start: parse_time(chapter["start"]),
+        title: chapter["title"],
+        href: chapter["href"],
+        image: chapter["image"]
       }
     end)
   end
 
   defp parse_time(time) when is_binary(time) do
-    {:ok, result, _, _, _, _} = NPT.parse(time)
-    {:ok, NPT.total_ms(result)}
+    NPT.parse_total_ms(time)
   end
 end

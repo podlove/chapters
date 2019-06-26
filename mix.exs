@@ -1,7 +1,7 @@
 defmodule Chapters.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "1.0.0"
   @url "https://github.com/podlove/chapters"
 
   def project do
@@ -16,8 +16,9 @@ defmodule Chapters.MixProject do
 
       # Docs
       name: "Chapters",
-      source_url: @url,
       docs: [
+        source_url: @url,
+        source_ref: "v#{@version}",
         # The main page in the docs
         main: "Chapters",
         extras: ["README.md"]
@@ -32,8 +33,9 @@ defmodule Chapters.MixProject do
   defp package() do
     [
       licenses: ["MIT"],
-      maintainers: ["Eric Teubert"],
-      links: %{"GitHub" => @url}
+      maintainers: ["Eric Teubert", "Dominik Wagner"],
+      links: %{"GitHub" => @url},
+      exclude_patterns: [".DS_Store"]
     ]
   end
 
