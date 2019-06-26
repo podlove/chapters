@@ -10,19 +10,19 @@ defmodule Chapters.Parsers.Mp4chaps.Parser do
 
     iex> {:ok, [r | _], "", _, _, _} = mp4chaps("00:00:00 Intro")
     iex> r
-    [time: [hours: 0, minutes: 0, seconds: 0], title: "Intro"]
+    [start: [hours: 0, minutes: 0, seconds: 0], title: "Intro"]
 
     iex> {:ok, r, "", _, _, _} = mp4chaps("00:00:00 Intro\r\n00:01:02 Podlove <https://podlove.org>")
     iex> r
     [
-      [time: [hours: 0, minutes: 0, seconds: 0], title: "Intro"],
-      [time: [hours: 0, minutes: 1, seconds: 2], title: "Podlove", url: "https://podlove.org"]
+      [start: [hours: 0, minutes: 0, seconds: 0], title: "Intro"],
+      [start: [hours: 0, minutes: 1, seconds: 2], title: "Podlove", href: "https://podlove.org"]
     ]
   """
 
   alias Chapters.Parsers.Helpers
 
-  url =
+  href =
     ignore(ascii_char([?<]))
     |> repeat(
       lookahead_not(ascii_char([?>]))
@@ -46,10 +46,10 @@ defmodule Chapters.Parsers.Mp4chaps.Parser do
 
   line =
     Helpers.normalplaytime()
-    |> tag(:time)
+    |> tag(:start)
     |> ignore(string(" "))
     |> concat(title |> unwrap_and_tag(:title))
-    |> optional(url |> unwrap_and_tag(:url))
+    |> optional(href |> unwrap_and_tag(:href))
     |> ignore(end_of_line)
 
   defparsec(
@@ -63,9 +63,9 @@ defmodule Chapters.Parsers.Mp4chaps.Parser do
     chapters
     |> Enum.map(fn chapter ->
       %Chapter{
+        start: Keyword.get(chapter, :start) |> NPT.total_ms(),
         title: Keyword.get(chapter, :title),
-        time: Keyword.get(chapter, :time) |> NPT.total_ms(),
-        url: Keyword.get(chapter, :url)
+        href: Keyword.get(chapter, :href)
       }
     end)
   end

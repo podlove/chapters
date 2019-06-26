@@ -8,9 +8,9 @@ defmodule Chapters.Parsers.Json.Parser do
     chapters
     |> Enum.map(fn chapter ->
       %Chapter{
+        start: parse_time(chapter["start"]),
         title: chapter["title"],
-        time: parse_time(chapter["start"]),
-        url: chapter["href"],
+        href: chapter["href"],
         image: chapter["image"]
       }
     end)

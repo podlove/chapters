@@ -24,14 +24,15 @@ iex(1)> chapters = Chapters.decode(~S"""
 ...(1)> 00:01:59 Podlove <http://podlove.org/>
 ...(1)> """, :mp4chaps)
 [
-  %Chapters.Chapter{image: nil, time: 0, title: "Intro", url: nil},
+  %Chapters.Chapter{href: nil, image: nil, start: 0, title: "Intro"},
   %Chapters.Chapter{
+    href: "http://podlove.org/",
     image: nil,
-    time: 119000,
-    title: "Podlove",
-    url: "http://podlove.org/" 
+    start: 119000,
+    title: "Podlove"
   }
 ]
+
 ```
 
 Encode to PSC
@@ -41,7 +42,7 @@ iex> Chapters.encode(chapters, :psc) |> IO.puts
 <?xml version="1.0" encoding="UTF-8"?>
 <psc:chapters version="1.2" xmlns:psc="http://podlove.org/simple-chapters">
   <psc:chapter start="00:00:00.000" title="Intro"/>
-  <psc:chapter href="http://podlove.org/" start="00:01:59.000" title="Podlove"/>
+  <psc:chapter start="00:01:59.000" title="Podlove" href="http://podlove.org/"/>
 </psc:chapters>
 ```
 
@@ -57,7 +58,7 @@ Encode to JSON
 
 ```elixir
 iex> Chapters.encode(chapters, :json) |> IO.puts                
-[{"start":"00:00:00.000","title":"Intro"},{"href":"http://podlove.org/","start":"00:01:59.000","title":"Podlove"}]
+[{"start":"00:00:00.000","title":"Intro"},{"start":"00:01:59.000","title":"Podlove","href":"http://podlove.org/"}]
 ```
 
 <!-- MDOC !-->

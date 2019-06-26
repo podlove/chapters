@@ -4,35 +4,35 @@ defmodule Chapters.Chapter do
   """
 
   @typedoc """
-  * `time` - milliseconds since start. e.g. "00:01:30.000" would be `90_000` (mandatory)
+  * `start` - milliseconds since start. e.g. "00:01:30.000" would be `90_000` (mandatory)
   * `title` - title of that chapter (mandatory)
+  * `href` - link to jump to that chapter (optional)
   * `image` - url to a chapter image (optional)
-  * `url` - link to jump to that chapter (optional)
   """
 
   @type t :: %__MODULE__{
-          time: non_neg_integer,
+          start: non_neg_integer,
           title: String.t(),
-          url: String.t() | nil,
+          href: String.t() | nil,
           image: String.t() | nil
         }
-  defstruct time: 0,
+  defstruct start: 0,
             title: "",
-            url: nil,
+            href: nil,
             image: nil
 
   @doc """
-      Produces an ordered keylist `:start, :title, :href, :image` for use in json or psc
+      Produces an ordered keylist `:start, :title, :href, :image` with the start already formatted top a normal playtime for use in output formats
   """
 
   def to_keylist(%__MODULE__{} = chapter) do
     [
       start:
-        chapter.time
+        chapter.start
         |> Chapters.Formatters.Normalplaytime.Formatter.format(),
       title: chapter.title
     ]
-    |> maybe_put(:href, chapter.url)
+    |> maybe_put(:href, chapter.href)
     |> maybe_put(:image, chapter.image)
   end
 

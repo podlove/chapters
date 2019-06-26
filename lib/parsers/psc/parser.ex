@@ -10,7 +10,7 @@ defmodule Chapters.Parsers.PSC.Parser do
         ~x"//psc:chapter"l,
         start: ~x"./@start"s,
         title: ~x"./@title"s,
-        url: ~x"./@href"s,
+        href: ~x"./@href"s,
         image: ~x"./@image"s
       ]
     )
@@ -18,13 +18,13 @@ defmodule Chapters.Parsers.PSC.Parser do
     |> Enum.map(fn parse_map ->
       Enum.reduce(parse_map, %Chapter{}, fn
         {:start, timestring}, chapter ->
-          %Chapter{chapter | time: parse_time(timestring)}
+          %Chapter{chapter | start: parse_time(timestring)}
 
         {:title, title}, chapter when is_binary(title) ->
           %Chapter{chapter | title: title}
 
-        {:url, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
-          %Chapter{chapter | url: value}
+        {:href, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
+          %Chapter{chapter | href: value}
 
         {:image, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
           %Chapter{chapter | image: value}

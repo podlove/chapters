@@ -1,20 +1,15 @@
 defmodule Chapters.Formatters.PSC.Formatter do
   import XmlBuilder
 
-  @spec format([Chapters.Chapter.t()]) :: binary()
+  alias Chapters.Chapter
+
+  @spec format([Chapter.t()]) :: binary()
   def format(input) do
     chapters =
       Enum.map(input, fn chapter ->
         element(
           :"psc:chapter",
-          [
-            start:
-              chapter.time
-              |> Chapters.Formatters.Normalplaytime.Formatter.format(),
-            title: chapter.title
-          ]
-          |> maybe_put(:href, chapter.url)
-          |> maybe_put(:image, chapter.image),
+          Chapter.to_keylist(chapter),
           nil
         )
       end)
@@ -26,7 +21,4 @@ defmodule Chapters.Formatters.PSC.Formatter do
     )
     |> generate
   end
-
-  defp maybe_put(keylist, _key, nil), do: keylist
-  defp maybe_put(keylist, key, value), do: List.keystore(keylist, key, 0, {key, value})
 end

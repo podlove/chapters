@@ -14,14 +14,18 @@ defmodule ChaptersTest do
 
   test "decode PSC" do
     assert Chapters.decode(@psc_chapters, :psc) == [
-             %Chapter{time: 0, title: "Intro"},
-             %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"},
-             %Chapter{time: 599_000, title: "Podlove Logo", image: "http://podlove.org/logo.jpg"},
+             %Chapter{start: 0, title: "Intro"},
+             %Chapter{start: 119_000, title: "Podlove", href: "http://podlove.org/"},
              %Chapter{
-               time: 2_511_792,
+               start: 599_000,
+               title: "Podlove Logo",
+               image: "http://podlove.org/logo.jpg"
+             },
+             %Chapter{
+               start: 2_511_792,
                title: "Erratum: Wir meinen Steve Jackson",
                image: "http://fanboys.fm/assets/123/Chapter07.jpeg",
-               url:
+               href:
                  "https://en.wikipedia.org/wiki/Steve_Jackson_(American_game_designer)#The_two_\"Steve_Jacksons\""
              }
            ]
@@ -33,8 +37,8 @@ defmodule ChaptersTest do
   """
   test "decode mp4chaps" do
     assert Chapters.decode(@mp4chaps_chapters, :mp4chaps) == [
-             %Chapter{time: 0, title: "Intro"},
-             %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
+             %Chapter{start: 0, title: "Intro"},
+             %Chapter{start: 119_000, title: "Podlove", href: "http://podlove.org/"}
            ]
   end
 
@@ -49,14 +53,14 @@ defmodule ChaptersTest do
 
   test "decode json" do
     assert Chapters.decode(@json_chapters, :json) == [
-             %Chapter{time: 0, title: "Intro"},
-             %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"},
-             %Chapter{time: 599_000, title: "Podlove Logo", image: "http://podlove.org/logo"},
+             %Chapter{start: 0, title: "Intro"},
+             %Chapter{start: 119_000, title: "Podlove", href: "http://podlove.org/"},
+             %Chapter{start: 599_000, title: "Podlove Logo", image: "http://podlove.org/logo"},
              %Chapter{
-               time: 2_511_792,
+               start: 2_511_792,
                title: "Erratum: Wir meinen Steve Jackson",
                image: "http://fanboys.fm/assets/123/Chapter07.jpeg",
-               url:
+               href:
                  "https://en.wikipedia.org/wiki/Steve_Jackson_(American_game_designer)#The_two_\"Steve_Jacksons\""
              }
            ]
@@ -65,14 +69,14 @@ defmodule ChaptersTest do
   test "encode json" do
     assert Chapters.encode(
              [
-               %Chapter{time: 0, title: "Intro"},
-               %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"},
-               %Chapter{time: 599_000, title: "Podlove Logo", image: "http://podlove.org/logo"},
+               %Chapter{start: 0, title: "Intro"},
+               %Chapter{start: 119_000, title: "Podlove", href: "http://podlove.org/"},
+               %Chapter{start: 599_000, title: "Podlove Logo", image: "http://podlove.org/logo"},
                %Chapter{
-                 time: 2_511_792,
+                 start: 2_511_792,
                  title: "Erratum: Wir meinen Steve Jackson",
                  image: "http://fanboys.fm/assets/123/Chapter07.jpeg",
-                 url:
+                 href:
                    "https://en.wikipedia.org/wiki/Steve_Jackson_(American_game_designer)#The_two_\"Steve_Jacksons\""
                }
              ],
@@ -94,18 +98,18 @@ defmodule ChaptersTest do
   test "encode psc" do
     assert Chapters.encode(
              [
-               %Chapter{time: 0, title: "Intro"},
-               %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"},
+               %Chapter{start: 0, title: "Intro"},
+               %Chapter{start: 119_000, title: "Podlove", href: "http://podlove.org/"},
                %Chapter{
-                 time: 599_000,
+                 start: 599_000,
                  title: "Podlove Logo",
                  image: "http://podlove.org/logo.jpg"
                },
                %Chapter{
-                 time: 2_511_792,
+                 start: 2_511_792,
                  title: "Erratum: Wir meinen Steve Jackson",
                  image: "http://fanboys.fm/assets/123/Chapter07.jpeg",
-                 url:
+                 href:
                    "https://en.wikipedia.org/wiki/Steve_Jackson_(American_game_designer)#The_two_\"Steve_Jacksons\""
                }
              ],
@@ -121,8 +125,8 @@ defmodule ChaptersTest do
   test "encode mp4chaps" do
     assert Chapters.encode(
              [
-               %Chapter{time: 0, title: "Intro"},
-               %Chapter{time: 119_000, title: "Podlove", url: "http://podlove.org/"}
+               %Chapter{start: 0, title: "Intro"},
+               %Chapter{start: 119_000, title: "Podlove", href: "http://podlove.org/"}
              ],
              :mp4chaps
            )
