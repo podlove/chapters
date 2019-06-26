@@ -67,6 +67,26 @@ defmodule Chapters.Parsers.Normalplaytime.Parser do
 
   defparsec(:parse, Chapters.Parsers.Helpers.normalplaytime())
 
+  @doc """
+  Get total milliseconds from a normal play time string
+
+  ## Examples
+
+    iex> parse_total_ms("00:01:30.00")
+    90000
+
+    iex> parse_total_ms("something")
+    nil
+
+  """
+  def parse_total_ms(playtime) when is_binary(playtime) do
+    with {:ok, parse_result, "", _, _, _} <- parse(playtime) do
+      total_ms(parse_result)
+    else
+      _ -> nil
+    end
+  end
+
   def convert_ms(n) when is_binary(n) and byte_size(n) == 1 do
     String.to_integer(n) * 100
   end

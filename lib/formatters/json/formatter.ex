@@ -1,18 +1,21 @@
 defmodule Chapters.Formatters.Json.Formatter do
-  @spec format([Chapters.Chapter.t()]) :: binary()
+  import Jason.Helpers
+  alias Chapters.Chapter
+
+  @spec format([Chapter.t()]) :: binary()
   def format(input) do
     input
     |> Enum.map(fn chapter ->
-      %{
-        start: Map.get(chapter, :time) |> Chapters.Formatters.Normalplaytime.Formatter.format(),
-        title: Map.get(chapter, :title)
-      }
-      |> maybe_put(:href, Map.get(chapter, :url))
-      |> maybe_put(:image, Map.get(chapter, :image))
+      chapter_map = chapter |> Chapter.to_keylist() |> Map.new()
+
+      # to facilitate ordering, the list of keys to take needs to be static
+      case {chapter.image, chapter.url} do
+        {nil, nil} -> json_map_take(chapter_map, [:start, :title])
+        {_im, nil} -> json_map_take(chapter_map, [:start, :title, :image])
+        {nil, _ur} -> json_map_take(chapter_map, [:start, :title, :href])
+        {_im, _ur} -> json_map_take(chapter_map, [:start, :title, :href, :image])
+      end
     end)
     |> Jason.encode!()
   end
-
-  defp maybe_put(map, _key, nil), do: map
-  defp maybe_put(map, key, value), do: Map.put(map, key, value)
 end

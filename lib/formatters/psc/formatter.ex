@@ -7,13 +7,15 @@ defmodule Chapters.Formatters.PSC.Formatter do
       Enum.map(input, fn chapter ->
         element(
           :"psc:chapter",
-          %{
+          [
             start:
-              Map.get(chapter, :time) |> Chapters.Formatters.Normalplaytime.Formatter.format(),
-            title: Map.get(chapter, :title)
-          }
-          |> maybe_put(:href, Map.get(chapter, :url))
-          |> maybe_put(:image, Map.get(chapter, :image))
+              chapter.time
+              |> Chapters.Formatters.Normalplaytime.Formatter.format(),
+            title: chapter.title
+          ]
+          |> maybe_put(:href, chapter.url)
+          |> maybe_put(:image, chapter.image),
+          nil
         )
       end)
 
@@ -25,6 +27,6 @@ defmodule Chapters.Formatters.PSC.Formatter do
     |> generate
   end
 
-  defp maybe_put(map, _key, nil), do: map
-  defp maybe_put(map, key, value), do: Map.put(map, key, value)
+  defp maybe_put(keylist, _key, nil), do: keylist
+  defp maybe_put(keylist, key, value), do: List.keystore(keylist, key, 0, {key, value})
 end
