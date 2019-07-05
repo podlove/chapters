@@ -1,7 +1,8 @@
 defmodule ChaptersTest do
   use ExUnit.Case
-
   alias Chapters.Chapter
+
+  doctest Chapters.Chapter
 
   @psc_chapters ~S"""
   <psc:chapters version="1.2" xmlns:psc="http://podlove.org/simple-chapters">
