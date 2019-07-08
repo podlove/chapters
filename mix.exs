@@ -21,7 +21,7 @@ defmodule Chapters.MixProject do
         source_ref: "v#{@version}",
         # The main page in the docs
         main: "Chapters",
-        extras: ["README.md"]
+        extras: ["README.md", "CHANGELOG.md"]
       ]
     ]
   end

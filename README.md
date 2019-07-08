@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/podlove/chapters.svg?branch=master)](https://travis-ci.org/podlove/chapters)
 
 [Online Documentation](https://hexdocs.pm/chapters).
+[Github Changelog](https://github.com/podlove/chapters/blob/master/CHANGELOG.md)
 
 <!-- MDOC !-->
 
@@ -13,6 +14,8 @@ Supports:
 - [Podlove Simple Chapters](https://podlove.org/simple-chapters/) (xml/psc)
 - mp4chaps
 - JSON
+
+[Changelog](changelog.html)
 
 ## Basic Usage
 
