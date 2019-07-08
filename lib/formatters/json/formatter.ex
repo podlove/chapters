@@ -11,7 +11,7 @@ defmodule Chapters.Formatters.Json.Formatter do
       chapter_map = chapter |> Chapter.to_keylist() |> Map.new()
 
       # to facilitate ordering, the list of keys to take needs to be static
-      case {chapter.image, chapter.href} do
+      case {chapter_map[:image], chapter_map[:href]} do
         {nil, nil} -> json_map_take(chapter_map, [:start, :title])
         {_im, nil} -> json_map_take(chapter_map, [:start, :title, :image])
         {nil, _ur} -> json_map_take(chapter_map, [:start, :title, :href])
