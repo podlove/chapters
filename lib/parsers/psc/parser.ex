@@ -19,19 +19,19 @@ defmodule Chapters.Parsers.PSC.Parser do
     |> Map.get(:chapters)
     |> Enum.map(fn parse_map ->
       Enum.reduce(parse_map, %Chapter{}, fn
-        {:start, timestring}, chapter ->
+        {:start, timestring}, chapter = %Chapter{} ->
           %Chapter{chapter | start: parse_time(timestring)}
 
-        {:title, title}, chapter when is_binary(title) ->
+        {:title, title}, chapter = %Chapter{} when is_binary(title) ->
           %Chapter{chapter | title: title}
 
-        {:href, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
+        {:href, value}, chapter = %Chapter{} when is_binary(value) and byte_size(value) > 0 ->
           %Chapter{chapter | href: value}
 
-        {:image, value}, chapter when is_binary(value) and byte_size(value) > 0 ->
+        {:image, value}, chapter = %Chapter{} when is_binary(value) and byte_size(value) > 0 ->
           %Chapter{chapter | image: value}
 
-        _, chapter ->
+        _, chapter = %Chapter{} ->
           chapter
       end)
     end)
